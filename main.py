@@ -4,8 +4,8 @@ import traceback
 import tcod
 
 import color
-from engine import Engine
 import entity_factories
+from engine import Engine
 from procgen import generate_dungeon
 
 
