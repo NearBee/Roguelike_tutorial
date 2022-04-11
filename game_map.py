@@ -1,7 +1,7 @@
 from __future__ import annotations
 from html.entities import entitydefs
 
-from typing import Iterable, Iterator, Optional, TYPE_CHECKING
+from typing import Tuple, Iterable, Iterator, Optional, TYPE_CHECKING
 
 import numpy as np  # type: ignore
 from tcod.console import Console
@@ -30,7 +30,7 @@ class GameMap:
             (width, height), fill_value=False, order="F"
         )  # Tiles that the player has already seen
 
-        self.downstairs_location = (0, 0)
+        self.downstairs_location: Tuple[int, int] = (0, 0)
 
     @property
     def gamemap(self) -> GameMap:
@@ -113,8 +113,6 @@ class GameWorld:
         max_rooms: int,
         room_min_size: int,
         room_max_size: int,
-        max_monsters_per_room: int,
-        max_items_per_room: int,
         current_floor: int = 0,
     ):
         self.engine = engine
@@ -126,9 +124,6 @@ class GameWorld:
 
         self.room_min_size = room_min_size
         self.room_max_size = room_max_size
-
-        self.max_monsters_per_room = max_monsters_per_room
-        self.max_items_per_room = max_items_per_room
 
         self.current_floor = current_floor
 
@@ -143,7 +138,5 @@ class GameWorld:
             room_max_size=self.room_max_size,
             map_width=self.map_width,
             map_height=self.map_height,
-            max_monsters_per_room=self.max_monsters_per_room,
-            max_items_per_room=self.max_items_per_room,
             engine=self.engine,
         )
