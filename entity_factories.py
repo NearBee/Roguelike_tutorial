@@ -8,7 +8,7 @@ from entity import Actor, Item
 from entity import Entity
 
 player = Actor(
-    char="@",
+    char="○",
     color=(126, 222, 100),
     name="Player",
     ai_cls=HostileEnemy,
@@ -19,7 +19,7 @@ player = Actor(
 )
 
 orc = Actor(
-    char="o",
+    char="¡",
     color=(63, 127, 63),
     name="Orc",
     ai_cls=HostileEnemy,
@@ -30,7 +30,7 @@ orc = Actor(
 )
 
 troll = Actor(
-    char="T",
+    char="¡",
     color=(62, 222, 187),
     name="Troll",
     ai_cls=HostileEnemy,
@@ -41,28 +41,28 @@ troll = Actor(
 )
 
 confusion_scroll = Item(
-    char="~",
+    char="ß",
     color=(207, 63, 255),
     name="Confusion Scroll",
     consumable=consumable.ConfusionConsumable(number_of_turns=10),
 )
 
 fireball_scroll = Item(
-    char="~",
+    char="Σ",
     color=(0, 0, 255),
     name="Fireball Scroll",
     consumable=consumable.FireballDamageConsumeable(damage=12, radius=3),
 )
 
 health_potion = Item(
-    char="!",
-    color=(127, 0, 255),
+    char="¿",
+    color=(255, 68, 102),
     name="Health Potion",
     consumable=consumable.HealingConsumable(amount=4),
 )
 
 lighting_scroll = Item(
-    char="~",
+    char="Θ",
     color=(255, 255, 0),
     name="Lighting Scroll",
     consumable=consumable.LightningDamageConsumable(damage=20, maximum_range=5),
