@@ -49,17 +49,24 @@ class Engine:
 
         self.message_log.render(console=console, x=21, y=45, width=40, height=5)
 
-        render_function.render_bar(
+        render_function.render_hp_bar(
             console=console,
             current_value=self.player.fighter.hp,
             maximum_value=self.player.fighter.max_hp,
             total_width=20,
         )
 
+        render_function.render_xp_bar(
+            console=console,
+            current_value=self.player.level.current_xp,
+            maximum_value=self.player.level.experience_to_next_level,
+            total_width=20,
+        )
+
         render_function.render_dungeon_level(
             console=console,
             dungeon_level=self.game_world.current_floor,
-            location=(0, 47),
+            location=(32, 0),
         )
 
         render_function.render_names_at_mouse_location(

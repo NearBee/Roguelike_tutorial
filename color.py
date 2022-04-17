@@ -22,5 +22,7 @@ bar_text = white
 bar_filled = (0x0, 0x60, 0x0)
 bar_empty = (0x40, 0x10, 0x10)
 
+bar_filled_xp = (0xC9, 0xA0, 0xDC)
+
 menu_title = (255, 255, 63)
 menu_text = white
