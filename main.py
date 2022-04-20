@@ -23,13 +23,15 @@ def main() -> None:
         "art/16x16_sm_ascii.png", 16, 16, tcod.tileset.CHARMAP_CP437
     )
 
+    # TODO Add pygame music functionalitys
+
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
 
     with tcod.context.new_terminal(
         screen_width,
         screen_height,
         tileset=tileset,
-        title="Yet another Roguelike Tutorial",
+        title="Forest of Ancient Beings",
         vsync=True,
     ) as context:
         root_console = tcod.Console(screen_width, screen_height, order="F")
