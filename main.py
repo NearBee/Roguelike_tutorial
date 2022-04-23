@@ -1,6 +1,7 @@
 import traceback
 
 import tcod
+import music
 
 import color
 import exceptions
@@ -24,6 +25,7 @@ def main() -> None:
     )
 
     # TODO Add pygame music functionalitys
+    music.menu_music()
 
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
 
