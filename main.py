@@ -1,7 +1,7 @@
 import traceback
 
 import tcod
-import music
+import sounds
 
 import color
 import exceptions
@@ -24,8 +24,7 @@ def main() -> None:
         "art/16x16_sm_ascii.png", 16, 16, tcod.tileset.CHARMAP_CP437
     )
 
-    # TODO Add pygame music functionalitys
-    music.menu_music()
+    sounds.menu_music()
 
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
 

@@ -8,7 +8,7 @@ import traceback
 from typing import Optional
 
 import tcod
-import music
+import sounds
 
 import color
 from components.equippable import LeatherArmor
@@ -32,7 +32,7 @@ def new_game() -> Engine:
     room_min_size = 6
     max_rooms = 30
 
-    music.background_music()
+    sounds.background_music()
 
     player = copy.deepcopy(entity_factories.player)
 
@@ -118,7 +118,7 @@ class MainMenu(input_handlers.BaseEventHandler):
         if event.sym in (tcod.event.K_q, tcod.event.K_ESCAPE):
             raise SystemExit()
         elif event.sym == tcod.event.K_c:
-            music.menu_music_fadeout()
+            sounds.menu_music_fadeout()
             try:
                 return input_handlers.MainGameEventHandler(load_game("savegame.sav"))
             except FileNotFoundError:
@@ -129,7 +129,7 @@ class MainMenu(input_handlers.BaseEventHandler):
                     self, f"Failed to load save: \n{exc}"
                 )
         elif event.sym == tcod.event.K_n:
-            music.menu_music_fadeout()
+            sounds.menu_music_fadeout()
             return input_handlers.MainGameEventHandler(new_game())
 
         return None

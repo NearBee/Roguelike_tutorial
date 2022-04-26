@@ -14,6 +14,7 @@ from input_handlers import (
     AreaRangedAttackHandler,
     SingleRangedAttackHandler,
 )
+import sounds
 
 if TYPE_CHECKING:
     from entity import Actor, Item
@@ -57,6 +58,7 @@ class ConfusionConsumable(Consumable):
     def activate(self, action: actions.ItemAction) -> None:
         consumer = action.entity
         target = action.target_actor
+        sounds.confusion_sound()
 
         if not self.engine.game_map.visible[action.target_xy]:
             raise Impossible("You cannot target an area you cannot see.")
@@ -111,6 +113,7 @@ class FireballDamageConsumeable(Consumable):
 
     def activate(self, action: actions.ItemAction) -> None:
         target_xy = action.target_xy
+        sounds.fireball_sound()
 
         if not self.engine.game_map.visible[target_xy]:
             raise Impossible("You cannot target an area you cannot see.")
@@ -138,6 +141,7 @@ class LightningDamageConsumable(Consumable):
         consumer = action.entity
         target = None
         closest_distance = self.maximum_range + 1.0
+        sounds.lightning_sound()
 
         for actor in self.engine.game_map.actors:
             if actor is not consumer and self.parent.gamemap.visible[actor.x, actor.y]:

@@ -4,6 +4,7 @@ from typing import Optional, Tuple, TYPE_CHECKING
 
 import color
 import exceptions
+import sounds
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -108,6 +109,7 @@ class TakeStairsAction(Action):
         Take the stairs, if any exist at the entities location.
         """
         if (self.entity.x, self.entity.y) == self.engine.game_map.downstairs_location:
+            sounds.stairs_sound_effect()
             self.engine.game_world.generate_floor()
             self.engine.message_log.add_message(
                 "You descend the staircase...", color.descend
@@ -187,6 +189,7 @@ class MovementAction(ActionWithDirection):
 class BumpAction(ActionWithDirection):
     def perform(self) -> None:
         if self.target_actor:
+            sounds.hit_sound()
             return MeleeAction(self.entity, self.dx, self.dy).perform()
 
         else:

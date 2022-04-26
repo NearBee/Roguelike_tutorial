@@ -14,6 +14,7 @@ from actions import (
 )
 import color
 import exceptions
+import sounds
 
 
 if TYPE_CHECKING:
@@ -128,8 +129,10 @@ class EventHandler(BaseEventHandler):
             # A valid action was performed.
             if not self.engine.player.is_alive:
                 # The player was killed during or after the action.
+                sounds.death_jingle()
                 return GameOverEventHandler(self.engine)
             elif self.engine.player.level.requires_level_up:
+                sounds.level_up_sound_effect()
                 return LevelUpEventHandler(self.engine)
             return MainGameEventHandler(self.engine)  # Return to the main handler.
         return self
