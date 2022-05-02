@@ -11,12 +11,10 @@ import tcod
 import sounds
 
 import color
-from components.equippable import LeatherArmor
 from engine import Engine
 import entity_factories
 from game_map import GameWorld
 import input_handlers
-from procgen import generate_dungeon
 
 
 # Load the background image and remove the alpha channel.

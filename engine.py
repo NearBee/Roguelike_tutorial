@@ -3,7 +3,6 @@ from __future__ import annotations
 import lzma
 import pickle
 from typing import Tuple, TYPE_CHECKING
-from tcod import console_map_ascii_code_to_font
 
 from tcod.console import Console
 from tcod.map import compute_fov

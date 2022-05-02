@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 
+
 from typing import Callable, Optional, Tuple, TYPE_CHECKING, Union
 
 import tcod
@@ -542,7 +543,7 @@ class MainGameEventHandler(EventHandler):
             action = WaitAction(player)
 
         elif key == tcod.event.K_ESCAPE:
-            raise SystemExit()
+            return OptionMenuEventHandler(self)
         elif key == tcod.event.K_v:
             return HistoryViewer(self.engine)
 
@@ -560,6 +561,75 @@ class MainGameEventHandler(EventHandler):
 
         # No valid key pressed
         return action
+
+
+class OptionMenuEventHandler(BaseEventHandler):
+    """Opens and closes an Option Menu within the game."""
+
+    def __init__(self, parent_handler: BaseEventHandler):
+        self.parent = parent_handler
+
+    def on_render(self, console: tcod.Console) -> None:
+        self.parent.on_render(console)
+        console.tiles_rgb["fg"] //= 8
+        console.tiles_rgb["bg"] //= 8
+
+        x = 20
+        y = 14
+
+        console.draw_frame(
+            x=x,
+            y=y,
+            width=40,
+            height=20,
+            title="PAUSED",
+            clear=True,
+            fg=(255, 255, 255),
+            bg=(0, 0, 0),
+        )
+
+        console.print(
+            x=x + 20,
+            y=y + 3,
+            string=f"BG Volume: [-] {int(round(sounds.background_music_channel.get_volume(), 1) * 100):>3}% [+]",
+            alignment=tcod.CENTER,
+        )
+
+        console.print(
+            x=x + 20,
+            y=y + 5,
+            string=f"Effects Volume: [<] {int(round(sounds.sound_effects_channel.get_volume(), 1) * 100):>3}% [>]",
+            alignment=tcod.CENTER,
+        )
+
+        console.print(x=x + 20, y=y + 15, string=f"[E]xit", alignment=tcod.CENTER)
+
+    def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
+        key = event.sym
+        modifier = event.mod
+        current_background_volume = round(
+            sounds.background_music_channel.get_volume(), 1
+        )
+        current_effects_volume = round(sounds.sound_effects_channel.get_volume(), 1)
+
+        if key == tcod.event.K_ESCAPE:
+            return self.parent
+        if key == tcod.event.K_EQUALS and modifier & (
+            tcod.event.KMOD_LSHIFT | tcod.event.KMOD_RSHIFT
+        ):
+            sounds.background_music_channel.set_volume(current_background_volume + 0.1)
+        if key == tcod.event.K_MINUS:
+            sounds.background_music_channel.set_volume(current_background_volume - 0.1)
+        if key == tcod.event.K_PERIOD and modifier & (
+            tcod.event.KMOD_LSHIFT | tcod.event.KMOD_RSHIFT
+        ):
+            sounds.sound_effects_channel.set_volume(current_effects_volume + 0.1)
+        if key == tcod.event.K_COMMA and modifier & (
+            tcod.event.KMOD_LSHIFT | tcod.event.KMOD_RSHIFT
+        ):
+            sounds.sound_effects_channel.set_volume(current_effects_volume - 0.1)
+        if key == tcod.event.K_e:
+            raise SystemExit()
 
 
 class GameOverEventHandler(EventHandler):

@@ -1,7 +1,11 @@
 import traceback
+import os
 
+# This is used to silence the PyGame ad on startup.
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import tcod
 import sounds
+import pygame
 
 import color
 import exceptions
