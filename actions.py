@@ -169,6 +169,34 @@ class MeleeAction(ActionWithDirection):
             )
 
 
+# TODO: Create a targetting frame in a triangle formation, targeted from Boss x,y going to 2 points 3 tiles away
+class BossSpellAction(ActionWithDirection):
+    def perform(self) -> None:
+        target = self.target_actor
+        if not target:
+            raise exceptions.Impossible("Nothing to attack")
+
+        damage = round(self.entity.fighter.power - target.fighter.defense / 2)
+
+        attack_desc = (
+            f"{self.entity.name.capitalize()} spews it's guts, hitting {target.name}."
+        )
+        if self.entity is self.engine.player:
+            attack_color = (119, 170, 119)
+        else:
+            attack_color = color.enemy_atk
+
+        if damage > 0:
+            self.engine.message_log.add_message(
+                f"{attack_desc} for {damage} hit points.", attack_color
+            )
+            target.fighter.hp -= damage
+        else:
+            self.engine.message_log.add_message(
+                f"{attack_desc} but does no damage.", attack_color
+            )
+
+
 class MovementAction(ActionWithDirection):
     def perform(self) -> None:
         dest_x, dest_y = self.dest_xy

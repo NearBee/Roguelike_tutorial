@@ -6,7 +6,14 @@ from typing import List, Optional, Tuple, TYPE_CHECKING
 import numpy as np  # type: ignore
 import tcod
 
-from actions import Action, BumpAction, MeleeAction, MovementAction, WaitAction
+from actions import (
+    Action,
+    BumpAction,
+    MeleeAction,
+    BossSpellAction,
+    MovementAction,
+    WaitAction,
+)
 
 
 if TYPE_CHECKING:
@@ -111,6 +118,36 @@ class HostileEnemy(BaseAI):
         if self.engine.game_map.visible[self.entity.x, self.entity.y]:
             if distance <= 1:
                 return MeleeAction(self.entity, dx, dy).perform()
+
+            self.path = self.get_path_to(target.x, target.y)
+
+        if self.path:
+            dest_x, dest_y = self.path.pop(0)
+            return MovementAction(
+                self.entity,
+                dest_x - self.entity.x,
+                dest_y - self.entity.y,
+            ).perform()
+
+        return WaitAction(self.entity).perform()
+
+
+class BossEnemy(BaseAI):
+    def __init__(self, entity: Actor):
+        super().__init__(entity)
+        self.path: List[Tuple[int, int]] = []
+
+    def perform(self) -> None:
+        target = self.engine.player
+        dx = target.x - self.entity.x
+        dy = target.y - self.entity.y
+        distance = max(abs(dx), abs(dy))  # Chebyshev distance
+
+        if self.engine.game_map.visible[self.entity.x, self.entity.y]:
+            if distance <= 1:
+                return MeleeAction(self.entity, dx, dy).perform()
+            if distance == 3:
+                return BossSpellAction(self.entity, dx, dy).perform()
 
             self.path = self.get_path_to(target.x, target.y)
 

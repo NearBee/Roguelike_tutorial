@@ -14,6 +14,7 @@ class Inventory(BaseComponent):
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.items: List[Item] = []
+        # TODO: create a stacking list to minimize amount of time to look for a corresponding letter for an item
 
     def drop(self, item: Item) -> None:
         """

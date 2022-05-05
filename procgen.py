@@ -23,6 +23,8 @@ max_monsters_per_floor = [
     (1, 2),
     (4, 3),
     (6, 5),
+    (10, 1),
+    (11, 5),
 ]
 
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
@@ -37,6 +39,16 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     3: [(entity_factories.troll, 15)],
     5: [(entity_factories.troll, 30)],
     7: [(entity_factories.troll, 60)],
+    10: [
+        (entity_factories.abomination, 100),
+        (entity_factories.orc, 0),
+        (entity_factories.troll, 0),
+    ],
+    11: [
+        (entity_factories.troll, 80),
+        (entity_factories.orc, 20),
+        (entity_factories.abomination, 0),
+    ],
 }
 
 

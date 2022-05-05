@@ -1,4 +1,4 @@
-from components.ai import HostileEnemy
+from components.ai import BossEnemy, HostileEnemy
 from components import consumable, equippable
 from components.equipment import Equipment
 from components.fighter import Fighter
@@ -36,6 +36,17 @@ troll = Actor(
     ai_cls=HostileEnemy,
     equipment=Equipment(),
     fighter=Fighter(hp=16, base_defense=1, base_power=4),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=100),
+)
+
+abomination = Actor(
+    char="§",
+    color=(119, 170, 119),
+    name="Abomination",
+    ai_cls=BossEnemy,
+    equipment=Equipment(),
+    fighter=Fighter(hp=30, base_defense=3, base_power=10),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=100),
 )
